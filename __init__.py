@@ -1,1 +1,1 @@
-from .pywt import SWPT
+from .swpt import SWPT
