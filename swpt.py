@@ -40,7 +40,7 @@ class SWPT(object):
         if p in r:
           result.append(self._coeff_dict[p])
     else:
-      print('natural order is not supported yet.')
+      print('sorry, the natural order is not supported yet.')
       exit(1)
     return result
 

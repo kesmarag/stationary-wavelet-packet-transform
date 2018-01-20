@@ -9,3 +9,4 @@ if __name__ == '__main__':
   res = model.get_level(3)
   plt.pcolor(res)
   plt.show()
+
