@@ -34,7 +34,6 @@ class SWPT(object):
     for k in self._coeff_dict:
       if len(k) == level:
         r.append(k)
-    if order == 'freq':
     graycode_order = self._get_graycode_order(level)
     for p in graycode_order:
       if p in r:
