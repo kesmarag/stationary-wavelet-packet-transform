@@ -1,7 +1,5 @@
 import pywt
-from pywt._thresholding import hard, soft
-from sklearn.preprocessing import StandardScaler
-
+import numpy as np
 
 class SWPT(object):
 
@@ -30,31 +28,17 @@ class SWPT(object):
             p_run = p_run + 'A'
       pth = list(pth_new)
 
-  def get_level(self, level, order='freq', thresholding=None, threshold=None):
-    assert order in ['natural', 'freq']
+  def get_level(self, level):
     r = []
     result = []
     for k in self._coeff_dict:
       if len(k) == level:
         r.append(k)
     if order == 'freq':
-      graycode_order = self._get_graycode_order(level)
-      for p in graycode_order:
-        if p in r:
-          result.append(self._coeff_dict[p])
-    else:
-      print('The natural order is not supported yet.')
-      exit(1)
-    # apply the thressholding
-    if thresholding in ['hard', 'soft']:
-      if isinstance(threshold, (int, float)):
-        if thresholding == 'hard':
-          result = hard(result, threshold)
-        else:
-          result = soft(result, threshold)
-      else:
-        print('Threshold must be an integer or float number')
-        exit(1)
+    graycode_order = self._get_graycode_order(level)
+    for p in graycode_order:
+      if p in r:
+        result.append(self._coeff_dict[p])
     return result
 
   def get_coefficient_vector(self, name):
@@ -68,38 +52,3 @@ class SWPT(object):
     return graycode_order
 
 
-
-
-if __name__ == '__main__':
-  import numpy as np
-  import matplotlib.pyplot as plt
-  from sklearn.preprocessing import StandardScaler
-  threshold = 0.1
-  signal = np.load('/home/kesmarag/Github/sw06_new_modeling/signal_sw06_den.npy')
-  # signal = np.squeeze(signal)
-  print(signal.shape)
-  wt = SWPT(max_level=4)
-  wt.decompose(signal)
-  coef_orig = wt.get_level(4)
-  coef_soft = wt.get_level(4, thresholding='soft', threshold=threshold)
-  coef_hard = wt.get_level(4, thresholding='hard', threshold=threshold)
-  plt.figure()
-  plt.pcolor(coef_orig)
-  plt.colorbar()
-  plt.figure()
-  plt.pcolor(coef_soft)
-  plt.colorbar()
-  plt.figure()
-  plt.pcolor(coef_hard)
-  plt.colorbar()
-  plt.figure()
-  plt.pcolor(coef_orig - coef_soft)
-  plt.colorbar()
-  plt.figure()
-  plt.pcolor(coef_orig - coef_hard)
-  plt.colorbar()
-  plt.figure()
-  coef_soft_sc = StandardScaler().fit_transform(coef_soft.T).T
-  plt.pcolor(coef_soft_sc)
-  plt.colorbar()
-  plt.show()

@@ -1,9 +1,9 @@
-## instalation using pip:
+## instalation
 
 pip install git+https://github.com/kesmarag/stationary-wavelet-packet-transform.git
 
 
-## usage
+## example
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
@@ -20,6 +20,4 @@ res = model.get_level(3)
 '''
 plt.pcolor(res)
 plt.show()
-
-# Good luck!
 ```
