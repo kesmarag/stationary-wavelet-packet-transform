@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='kesmarag-swpt',
-      version='0.1.4',
+      version='0.2.0',
       description='Stationary Wavelet Packet Transform',
       author='Costas Smaragdakis',
       author_email='kesmarag@gmail.com',
